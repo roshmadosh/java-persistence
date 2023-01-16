@@ -1,5 +1,6 @@
-package com.hiroshisprojects.jdbc;
+package com.hiroshisprojects.jdbc.employee;
 
+import com.hiroshisprojects.jdbc.MyModel;
 
 class Employee extends MyModel {
 	private final static String TABLENAME = "employees";

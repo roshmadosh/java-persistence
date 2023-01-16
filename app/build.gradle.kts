@@ -8,6 +8,7 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
@@ -23,6 +24,10 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass.set("com.hiroshisprojects.jdbc.App")
+}
+
+tasks.withType<JavaExec>() {
+	standardInput = System.`in`
 }
 
 tasks.named<Test>("test") {

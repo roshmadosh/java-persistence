@@ -1,7 +1,8 @@
-package com.hiroshisprojects.jdbc;
+package com.hiroshisprojects.jdbc.data;
 
+import com.hiroshisprojects.jdbc.MyModel;
 
-abstract class QueryStringProvider<T extends MyModel> {
+public abstract class QueryStringProvider<T extends MyModel> {
 	protected String tableName;
 	public QueryStringProvider(String tableName) {
 		this.tableName = tableName;

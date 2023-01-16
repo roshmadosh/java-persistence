@@ -1,5 +1,5 @@
 package com.hiroshisprojects.jdbc;
 
 
-abstract class MyModel {
+public abstract class MyModel {
 }
