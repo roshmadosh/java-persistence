@@ -3,7 +3,7 @@ package com.hiroshisprojects.jdbc;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 
-public class App extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class DispatcherInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {

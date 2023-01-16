@@ -2,13 +2,14 @@ package com.hiroshisprojects.jdbc.employee;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.hiroshisprojects.jdbc.data.ApplicationDataSource;
 import com.hiroshisprojects.jdbc.data.Dao;
-import com.hiroshisprojects.jdbc.data.DbConnector;
 
 import org.springframework.stereotype.Repository;
 
@@ -18,8 +19,8 @@ public class EmployeeDao extends Dao<Employee> {
 	private Connection connection;
 	private EmployeeQueryStringProvider provider;
 
-	public EmployeeDao() {
-		connection = DbConnector.getConnection();
+	public EmployeeDao() throws SQLException {
+		connection = ApplicationDataSource.getConnection();
 		provider = new EmployeeQueryStringProvider();
 	}
 
