@@ -3,10 +3,16 @@ package com.hiroshisprojects.jdbc.employee;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.hiroshisprojects.jdbc.data.Dao;
 import com.hiroshisprojects.jdbc.data.DbConnector;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class EmployeeDao extends Dao<Employee> {
 	
 	private Connection connection;
@@ -40,20 +46,23 @@ public class EmployeeDao extends Dao<Employee> {
 	}
 
 	@Override
-	public void selectAll() {
+	public List<Employee> selectAll() {
 		try (Statement statement = connection.createStatement()) {
 			try (ResultSet resultSet = statement.executeQuery(provider.selectAll())) {
+				List<Employee> employees = new ArrayList<>();
 				while (resultSet.next()) {
 					Employee employee = new Employee(resultSet.getString("name"),
 							resultSet.getString("position"),
 							resultSet.getDouble("salary"));
-					System.out.println(employee);
+					employees.add(employee);
 				}
+				return employees;
 			} catch (Exception e) {
 				throw e;	
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return Collections.<Employee>emptyList();
 		}
 	}
 

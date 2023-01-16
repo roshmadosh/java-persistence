@@ -35,6 +35,7 @@ public class DbConnector {
 		String dbPassword = prop.getProperty("db.password");
 
 		try {
+			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = DriverManager.getConnection(connectionString, dbUsername, dbPassword);
 				
 			System.out.println("SUCCESS: Database connection established to DB.");
@@ -42,6 +43,10 @@ public class DbConnector {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("FAIL: Database connection failed, see stack trace.");
+			return null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();;
+			System.out.println("FAIL: Driver library for JDBC could not be found.");
 			return null;
 		}
 

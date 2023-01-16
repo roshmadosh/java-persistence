@@ -1,13 +1,22 @@
 package com.hiroshisprojects.jdbc;
 
-import com.hiroshisprojects.jdbc.employee.EmployeeDao;
-import com.hiroshisprojects.jdbc.data.DbConnector;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class App {
 
-    public static void main(String[] args) {
-		EmployeeDao employeeDao = new EmployeeDao();
-		employeeDao.selectAll();
-		DbConnector.closeConnection();
+public class App extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return null;
+    }
+
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class<?>[] { WebConfig.class };
+    }
+
+    @Override
+    protected String[] getServletMappings() {
+        return new String[] { "/" };
     }
 }
