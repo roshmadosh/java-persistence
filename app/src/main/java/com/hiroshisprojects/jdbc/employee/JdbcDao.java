@@ -19,18 +19,15 @@ public class JdbcDao {
 
 	public List<Employee> getEmployees() {
 		String query = "SELECT * FROM employees";
-		List<Employee> employees = jdbcTemplate.query(query, new EmployeeMapper());
+		List<Employee> employees = jdbcTemplate.query(
+				query,
+				(rs, ind) -> 
+					new Employee(
+						rs.getString("name"), 
+						rs.getString("position"), 
+						rs.getDouble("salary")
+					)
+				);
 		return employees;
-	}
-
-	private static final class EmployeeMapper implements RowMapper<Employee> {
-
-		public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
-			String name = rs.getString("name");
-			String position = rs.getString("position");
-			double salary = rs.getDouble("salary");
-			Employee employee = new Employee(name, position, salary);
-			return employee;
-		}
 	}
 }
