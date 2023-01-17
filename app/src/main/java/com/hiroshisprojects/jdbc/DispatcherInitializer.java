@@ -7,7 +7,7 @@ public class DispatcherInitializer extends AbstractAnnotationConfigDispatcherSer
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return null;
+        return new Class<?>[]{ JdbcTemplateConfig.class };
     }
 
     @Override

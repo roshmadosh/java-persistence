@@ -24,6 +24,8 @@ dependencies {
 	implementation("com.mysql:mysql-connector-j:8.0.31")
 
 	val springVersion = "5.3.24"
+	// for JdbcTemplate
+	implementation("org.springframework:spring-jdbc:$springVersion")
 	// spring web mvc 
 	implementation("org.springframework:spring-webmvc:$springVersion")
 
