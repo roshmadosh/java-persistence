@@ -14,8 +14,11 @@ dependencies {
 	// servlet
 	compileOnly("javax.servlet:javax.servlet-api:4.0.1")
 
-    // Use JUnit Jupiter for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
+    // Testing 
+	testImplementation("junit:junit:4.13.2")
+	testImplementation("org.dbunit:dbunit:2.7.3")
+	testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.8.2")
+
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:31.1-jre")

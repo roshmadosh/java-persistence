@@ -17,4 +17,12 @@ For some reason the `datasource.properties` file's `jdbcUrl` attribute could not
 also done from outside the properties file. This meant I had to set configuration properties in two different places, which is not ideal.  
 
 
+### JDBC using Spring's JdbcTemplate interface
+`JdbcTemplate` abstracts away having to close connections and handle exceptions, and allows for more declarative code.
+
+`JdbcTemplate` needs a `DataSource` implementation to be passed as a constructor argument. The one used was `MysqlDataSource` which 
+came with the dependency containing the MySQL driver.
+
+
+
 
