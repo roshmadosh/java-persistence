@@ -1,63 +1,61 @@
 package com.hiroshisprojects.jdbc;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import com.hiroshisprojects.jdbc.employee.Employee;
+import com.hiroshisprojects.jdbc.employee.EmployeeDao;
+import com.hiroshisprojects.jdbc.employee.JdbcDao;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.dbunit.Assertion;
 import org.dbunit.DataSourceBasedDBTestCase;
-import org.dbunit.database.DatabaseConfig;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.dbunit.ext.mysql.MySqlMetadataHandler;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
  
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { JdbcTemplateConfig.class, WebConfig.class })
+@WebAppConfiguration // this adds a servlet context
 public class DataSourceDBUnitTest extends DataSourceBasedDBTestCase {
 
-	private Logger logger;
-
+	private final Logger logger = LoggerFactory.getLogger(DataSourceDBUnitTest.class);;
+	@Autowired
+	private JdbcDao employeeDao;
 
 	@Override
 	protected DataSource getDataSource() {
 
-		logger = LoggerFactory.getLogger(DataSourceDBUnitTest.class);
-
-		
 		Properties props = new Properties();
 		try (InputStream input = DataSourceDBUnitTest.class.getClassLoader().getResourceAsStream("datasource.properties")) {
 			props.load(input);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		MysqlDataSource ds = new MysqlDataSource();
 		ds.setURL(props.getProperty("dataSource.jdbcUrl"));
 		ds.setUser(props.getProperty("dataSource.user"));
 		ds.setPassword(props.getProperty("dataSource.password"));
 		
-		try {
-			IDatabaseConnection connection = new DatabaseConnection(ds.getConnection());
-			connection.getConfig()
-			  .setProperty(DatabaseConfig.PROPERTY_METADATA_HANDLER, new MySqlMetadataHandler());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return ds;
 	}
 	
 	@Override
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSetBuilder().build(getClass().getClassLoader()
-          .getResourceAsStream("data.xml"));
+          .getResourceAsStream("data_init.xml"));
 	}
 
 	@Override
@@ -80,4 +78,11 @@ public class DataSourceDBUnitTest extends DataSourceBasedDBTestCase {
 		
 		Assertion.assertEquals(expectedTable, actualTable);
 	}
+
+	
+	@Test
+	public void testGivenSingleEmployee_whenDaoSelectsAll_thenSingleEmployeeReturned() throws Exception {
+
+	}
+	
 }

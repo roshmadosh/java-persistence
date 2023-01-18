@@ -2,12 +2,14 @@ package com.hiroshisprojects.jdbc.employee;
 
 import com.hiroshisprojects.jdbc.MyModel;
 
-class Employee extends MyModel {
+public class Employee extends MyModel {
 	private final static String TABLENAME = "employees";
 	
 	private String name;
 	private String position;
 	private double salary;
+
+	public Employee() {}
 
 	public Employee(String name, String position, double salary) {
 		this.name = name;

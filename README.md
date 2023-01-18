@@ -23,6 +23,8 @@ also done from outside the properties file. This meant I had to set configuratio
 `JdbcTemplate` needs a `DataSource` implementation to be passed as a constructor argument. The one used was `MysqlDataSource` which 
 came with the dependency containing the MySQL driver.
 
+### Testing with DBUnit
+DBUnit connects to a live DB and makes actual changes to the DB it connects to. It allows you to define the initial state of the DB using an XML file. Still not sure if it's meant to be used for testing your DAOs, maybe include a flag in all DAOs that determines if its methods act on the "prod" database versus your test database.  
 
 
 

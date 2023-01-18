@@ -11,13 +11,16 @@ repositories {
 
 
 dependencies {
+	val springVersion = "5.3.24"
 	// servlet
-	compileOnly("javax.servlet:javax.servlet-api:4.0.1")
+	implementation("javax.servlet:javax.servlet-api:4.0.1")
 
     // Testing 
 	testImplementation("junit:junit:4.13.2")
 	testImplementation("org.dbunit:dbunit:2.7.3")
 	testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.8.2")
+	testImplementation("org.springframework:spring-test:$springVersion")
+
 
 
     // This dependency is used by the application.
@@ -26,7 +29,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 	implementation("com.mysql:mysql-connector-j:8.0.31")
 
-	val springVersion = "5.3.24"
 	// for JdbcTemplate
 	implementation("org.springframework:spring-jdbc:$springVersion")
 	// spring web mvc 

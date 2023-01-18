@@ -27,4 +27,9 @@ public class JdbcDao {
 				);
 		return employees;
 	}
+	public Employee insertEmployee(Employee employee) {
+		String query = "INSERT INTO employees (name, position, salary) VALUES (?, ?, ?)";
+		jdbcTemplate.update(query, employee.getName(), employee.getPosition(), employee.getSalary());
+		return employee;
+	}
 }
