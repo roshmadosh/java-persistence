@@ -38,9 +38,19 @@ dependencies {
 
 	// DB connection pool
 	implementation("com.zaxxer:HikariCP:5.0.1")
+
+	// logs
+	implementation("org.slf4j:slf4j-api:2.0.6")
+	implementation("ch.qos.logback:logback-classic:1.4.5")
 }
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+tasks.withType<Test> {
+    this.testLogging {
+        this.showStandardStreams = true
+    }
+}
+

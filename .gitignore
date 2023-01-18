@@ -9,3 +9,4 @@ build
 .settings
 *.properties
 bin/
+logs*/
