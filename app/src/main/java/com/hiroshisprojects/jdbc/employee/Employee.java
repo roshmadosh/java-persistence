@@ -3,7 +3,6 @@ package com.hiroshisprojects.jdbc.employee;
 import com.hiroshisprojects.jdbc.MyModel;
 
 public class Employee extends MyModel {
-	private final static String TABLENAME = "employees";
 	
 	private String name;
 	private String position;
