@@ -6,8 +6,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import com.hiroshisprojects.jdbc.employee.Employee;
-import com.hiroshisprojects.jdbc.employee.EmployeeDao;
 import com.hiroshisprojects.jdbc.employee.JdbcDao;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.dbunit.Assertion;

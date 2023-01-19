@@ -2,11 +2,15 @@ package com.hiroshisprojects.jdbc.employee;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class JdbcDao {
+	
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -18,11 +22,11 @@ public class JdbcDao {
 		String query = "SELECT * FROM employees";
 		List<Employee> employees = jdbcTemplate.query(
 				query,
-				(rs, ind) -> 
+				(resultSet, ind) -> 
 					new Employee(
-						rs.getString("name"), 
-						rs.getString("position"), 
-						rs.getDouble("salary")
+						resultSet.getString("name"), 
+						resultSet.getString("position"), 
+						resultSet.getDouble("salary")
 					)
 				);
 		return employees;
@@ -31,5 +35,12 @@ public class JdbcDao {
 		String query = "INSERT INTO employees (name, position, salary) VALUES (?, ?, ?)";
 		jdbcTemplate.update(query, employee.getName(), employee.getPosition(), employee.getSalary());
 		return employee;
+	}
+
+	public Employee findEmployeeById(long empId) throws DataAccessException {
+		String query = "SELECT * FROM employees WHERE emp_id = ?";
+		return jdbcTemplate.queryForObject(query, 
+			(resultSet, rowNum) -> new Employee(resultSet.getString("name"), resultSet.getString("position"), resultSet.getDouble("salary")),
+			empId);
 	}
 }

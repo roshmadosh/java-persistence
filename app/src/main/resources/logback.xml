@@ -1,0 +1,20 @@
+<configuration>
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<property name="LOG_DIR" value="${CATALINA_HOME}/logs/java-persisitence" />
+		<property name="SEPARATOR" value="||" />
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR:-.}/log_.%d{yyyy-MM-dd}.log</fileNamePattern>
+		</rollingPolicy>
+		<append>true</append>
+
+		<encoder>
+			<pattern>%d{HH:mm:ss:SSS} [%thread] ${SEPARATOR} %-5level ${SEPARATOR} %logger{36} %kvp--- %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
+
+	
