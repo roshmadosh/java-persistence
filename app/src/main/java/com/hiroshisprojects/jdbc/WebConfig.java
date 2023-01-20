@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({ "com.hiroshisprojects.jdbc.employee" })
+@ComponentScan({ "com.hiroshisprojects.jdbc.employee", "com.hiroshisprojects.jdbc.data" })
 public class WebConfig implements WebMvcConfigurer {
 
 }

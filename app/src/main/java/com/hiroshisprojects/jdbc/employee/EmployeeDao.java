@@ -14,14 +14,14 @@ import com.hiroshisprojects.jdbc.data.Dao;
 import org.springframework.stereotype.Repository;
 
 
-//@Repository // GETTING WEIRD BUG WHERE CONNECTION POOL STAYS OPEN AFTER PROGRAM TERMINATES, REMOVING FROM APP CONTEXT
+// @Repository 
 public class EmployeeDao extends Dao<Employee> {
 	
 	private Connection connection;
 	private EmployeeQueryStringProvider provider;
 
-	public EmployeeDao() throws SQLException {
-		connection = ApplicationDataSource.getConnection();
+	public EmployeeDao(ApplicationDataSource ds) throws SQLException {
+		connection = ds.getConnection();
 		provider = new EmployeeQueryStringProvider();
 	}
 

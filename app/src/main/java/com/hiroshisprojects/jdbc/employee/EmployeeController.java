@@ -27,17 +27,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
+	private EmployeeDao dao;
 	private JdbcDao jdbcDao;
-	public EmployeeController(JdbcDao jdbcDao) {
+	public EmployeeController(EmployeeDao dao, JdbcDao jdbcDao) {
 		this.jdbcDao = jdbcDao;
+		this.dao = dao;
 	}
 
-	// @GetMapping
-	// @ResponseBody
-	// public List<Employee> getEmployees() {
-	// 	List<Employee> employees = dao.selectAll();	
-	// 	return employees;
-	// }
+	@GetMapping
+	@ResponseBody
+	public List<Employee> getEmployees() {
+		List<Employee> employees = dao.selectAll();	
+		return employees;
+	}
 
 
 	@GetMapping("/template")

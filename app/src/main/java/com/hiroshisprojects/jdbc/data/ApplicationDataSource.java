@@ -11,13 +11,18 @@ import javax.sql.DataSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import org.springframework.stereotype.Component;
 
 
+@Component
 public class ApplicationDataSource {
 
-	private static DataSource ds;
+	public Connection getConnection() throws SQLException {
+		return createDataSource().getConnection();
+	}
 
-	private static DataSource createDataSource() {
+
+	private DataSource createDataSource() {
 		System.out.println("Creating Data Source...");
 		Properties props = new Properties();
 
@@ -31,18 +36,7 @@ public class ApplicationDataSource {
 		config.setJdbcUrl(props.getProperty("dataSource.jdbcUrl"));
 		config.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		HikariDataSource datasource = new HikariDataSource(config);
-		ds = datasource;
 		return datasource;
-	}
-
-	private ApplicationDataSource() {}
-
-	public static Connection getConnection() throws SQLException {
-		if (ds != null) {
-			System.out.println("Connection already exists...");
-			return ds.getConnection();
-		}
-		return createDataSource().getConnection();
 	}
 
 }
