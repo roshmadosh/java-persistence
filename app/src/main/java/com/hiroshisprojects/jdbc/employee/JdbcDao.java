@@ -49,44 +49,25 @@ public class JdbcDao {
 			empId);
 	}
 
-	public void updateEmployeeWithId(long empId, Employee employee) throws Exception {
+	public void updateEmployeeWithId(long empId, Map<String, String> empMap) throws Exception {
 		// Expecting an exception to be thrown from method if emp not found. 
-		Employee checkExists = findEmployeeById(empId);
+		findEmployeeById(empId);
 		
-		Map<String, String> fieldsMap = Arrays.stream(Employee.class.getDeclaredFields())
-			.map(field -> {
-				field.setAccessible(true);
-				String key = field.getName();
-				String value;
-				try {
-					value = field.get(employee).toString();
-				} catch (IllegalAccessException e) {
-					LOGGER.error(e.getMessage(), e);
-					value = null;
-				}
-				return new String[] { key, value };
-			})
-			.collect(Collectors.toMap(entry -> entry[0], entry -> entry[1]));
-
+		// Construct query string from empMap
 		List<String> fieldsList = new ArrayList<>();
-		for (Map.Entry<String, String> entry: fieldsMap.entrySet()) {
-			if (entry.getKey().equals("salary")) {
-				if (Double.parseDouble(entry.getValue()) > 0.0) {
+		for (Map.Entry<String, String> entry: empMap.entrySet()) {
+			if (entry.getValue().equals("salary")) {
 					fieldsList.add(String.format("%s = %s", entry.getKey(), entry.getValue()));
-				}
-			} else if (!entry.getValue().isBlank()) {
+			} else {
 				fieldsList.add(String.format("%s = '%s'", entry.getKey(), entry.getValue()));
 			} 
 		}
-
-		if (fieldsList.isEmpty()) throw new IllegalArgumentException("At least one field must be updated.");
 
 		String setterString = fieldsList.stream().collect(Collectors.joining(", "));
 
 		String query = "UPDATE employees SET " + setterString + " WHERE emp_id = " + empId;
 
-		LOGGER.info("QUERY: " + query);
+		LOGGER.info("Submitting query to table 'employees': " + query);
 		jdbcTemplate.update(query);
-		
 	}
 }

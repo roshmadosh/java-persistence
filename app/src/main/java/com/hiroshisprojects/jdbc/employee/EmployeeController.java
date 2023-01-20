@@ -1,11 +1,9 @@
 package com.hiroshisprojects.jdbc.employee;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.protobuf.MapEntry;
 import com.hiroshisprojects.jdbc.exceptions.EmployeeNotFoundException;
 import com.hiroshisprojects.jdbc.exceptions.EmployeeUpdateException;
 
@@ -13,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,19 +26,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
-	private EmployeeDao dao;
+	// private EmployeeDao dao;
 	private JdbcDao jdbcDao;
-	public EmployeeController(EmployeeDao dao, JdbcDao jdbcDao) {
+	private IEmployeeService employeeService;
+	public EmployeeController(JdbcDao jdbcDao, IEmployeeService employeeService) {
 		this.jdbcDao = jdbcDao;
-		this.dao = dao;
+		// this.dao = dao;
+		this.employeeService = employeeService;
 	}
 
-	@GetMapping
-	@ResponseBody
-	public List<Employee> getEmployees() {
-		List<Employee> employees = dao.selectAll();	
-		return employees;
-	}
+	// @GetMapping
+	// @ResponseBody
+	// public List<Employee> getEmployees() {
+	// 	List<Employee> employees = dao.selectAll();	
+	// 	return employees;
+	// }
 
 
 	@GetMapping("/template")
@@ -68,15 +69,16 @@ public class EmployeeController {
 
 	@PutMapping("/template/{empId}")
 	@ResponseBody
-	public void updateEmployee(@PathVariable long empId, @RequestBody Employee employee) {
+	public ResponseEntity<Map<String, String>> updateEmployee(@PathVariable long empId, @RequestBody Map<String, String> empMap) {
+		Map<String, String> respObject = new HashMap<>();
 		try {
-			jdbcDao.updateEmployeeWithId(empId, employee);
-		} catch (NullPointerException npe) {
-			LOGGER.error(npe.getMessage());
-			throw new EmployeeUpdateException("Please include all fields for Employee update.");
+			employeeService.updateEmployee(empId, empMap);
+			respObject.put("message", "Employee with ID: " + empId + " successfully updated.");
+			return new ResponseEntity<>(respObject, HttpStatus.OK);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			throw new EmployeeUpdateException(e.getMessage());
+			respObject.put("message", e.getMessage());
+			return new ResponseEntity<>(respObject, HttpStatus.BAD_REQUEST);
 		}	
 	}
 
