@@ -1,16 +1,29 @@
 package com.hiroshisprojects.jpa.users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 @Entity
 @Table(name = "users")
 public class User {
 
-	@Id @Column(name = "userId") private long id;
-	@Column(name = "email") private String email;
+	@Id 
+	@GeneratedValue
+	@Column(name = "userId") 
+	private long id;
+
+	@Column(name = "email") 
+	@Size(max=55, min=5, message = "{email.invalid}")
+	@NotEmpty(message = "Email cannot be empty.")
+	private String email;
+
 	public long getId() {
 		return id;
 	}
