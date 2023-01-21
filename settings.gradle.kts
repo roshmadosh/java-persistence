@@ -8,4 +8,5 @@
  */
 
 rootProject.name = "jdbc"
-include("app")
+//include("app")
+include("jpa")

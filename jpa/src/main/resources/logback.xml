@@ -1,0 +1,10 @@
+<configuration>
+	<logger name="org.hibernate">
+		<level value="info"/>
+	</logger>
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
+
+	
