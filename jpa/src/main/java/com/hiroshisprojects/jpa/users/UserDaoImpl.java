@@ -13,12 +13,12 @@ public class UserDaoImpl implements UserDao {
 	private Session session;
 
 	public UserDaoImpl(SessionFactory sessionFactory) {
-		this.session = sessionFactory.openSession();
+		session = sessionFactory.openSession();
 	}
 
 	@Override
 	public void save(User user) {
-		session.persist(user);	
+		session.save(user);
 	}
 
 	@Override

@@ -24,5 +24,5 @@ dependencies {
 	implementation("org.hibernate:hibernate-core:$hibernateVersion")
 	implementation("org.springframework:spring-orm:$springVersion")
 	implementation("org.hibernate:hibernate-validator:$hibernateVersion")
-	
+	implementation("org.aspectj:aspectjweaver:1.9.7")
 }
