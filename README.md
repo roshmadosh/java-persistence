@@ -38,4 +38,6 @@ you.
 as well the POJOs hibernate will deal with.
 - The `HibernateTransationManager` requires the sessionFactory created early. Spring manages this bean in the background, i.e. we never work directly with it in our DAO or service classes.  
 
-The `HibernateTransationManager`, along with the `LocalSessionFactoryBean` are classes from the `org.springframework.orm.hibernate5` library. These classes make it possible to use a transaction manager and avoid having to open and commit transactions yourself. 
+The `HibernateTransationManager`, along with the `LocalSessionFactoryBean` are classes from the `org.springframework.orm.hibernate5` library. These classes make it possible to use a transaction manager and avoid having to open and commit transactions yourself.  
+
+To make Hibernate create tables for your entites, you need to set the property `hibernate.hbm2ddl.auto` to something that isn't `none`. In Spring Boot this will be done for us.

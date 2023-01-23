@@ -19,7 +19,7 @@ public class User {
 	@Column(name = "userId") 
 	private long id;
 
-	@Column(name = "email") 
+	@Column(name = "email", unique = true) 
 	@Size(max=55, min=5, message = "{email.invalid}")
 	@NotEmpty(message = "Email cannot be empty.")
 	private String email;

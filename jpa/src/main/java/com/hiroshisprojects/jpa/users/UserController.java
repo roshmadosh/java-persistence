@@ -36,8 +36,9 @@ public class UserController {
 			resp.put("message", "Successfully added user.");
 			return ResponseEntity.ok(resp);
 		} catch (Exception e) {
+			String message = String.format("Exception cause %s, message: %s", e.getCause(), e.getLocalizedMessage());
 			resp.put("user", null);
-			resp.put("message", e.getMessage());
+			resp.put("message", message);
 			return ResponseEntity.badRequest().body(resp);	
 		}
 	}
