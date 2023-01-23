@@ -33,9 +33,9 @@ public class HibernateConfig {
 		}
 		
 		MysqlDataSource ds = new MysqlDataSource();
-		ds.setUrl(props.getProperty("url"));
-		ds.setUser(props.getProperty("user"));
-		ds.setPassword(props.getProperty("password"));
+		ds.setUrl(props.getProperty("spring.datasource.url"));
+		ds.setUser(props.getProperty("spring.datasource.username"));
+		ds.setPassword(props.getProperty("spring.datasource.password"));
 		return ds;
 	}
 

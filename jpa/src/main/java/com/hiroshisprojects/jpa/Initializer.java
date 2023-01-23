@@ -1,6 +1,5 @@
 package com.hiroshisprojects.jpa;
 
-import com.hiroshisprojects.jpa.aspects.LoggingAspect;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

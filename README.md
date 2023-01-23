@@ -1,4 +1,4 @@
-# Java Persistence in Every Way
+# Java Persistence Several Ways 
 
 ### JDBC, without Connection Pool
 Serving a DB endpoint with a singleton JDBC connection, just for kicks.  
@@ -29,4 +29,13 @@ came with the dependency containing the MySQL driver.
 ### Testing with DBUnit
 DBUnit connects to a live DB and makes actual changes to the DB it connects to. It allows you to define the initial state of the DB using an XML file. Still not sure if it's meant to be used for testing your DAOs, maybe include a flag in all DAOs that determines if its methods act on the "prod" database versus your test database.  
 
+### Hibernate and Spring MVC
+The config class needs `@EnableTransactionManagement` if you want to use the transaction manager which creates and commits transactions for 
+you.   
 
+- The `DataSource` bean sets the DB connection properties like the connection string, username, and password. 
+- The `LocalSessionFactoryBean` bean takes the data source bean as input, and is where you set the location of your hibernate config file 
+as well the POJOs hibernate will deal with.
+- The `HibernateTransationManager` requires the sessionFactory created early. Spring manages this bean in the background, i.e. we never work directly with it in our DAO or service classes.  
+
+The `HibernateTransationManager`, along with the `LocalSessionFactoryBean` are classes from the `org.springframework.orm.hibernate5` library. These classes make it possible to use a transaction manager and avoid having to open and commit transactions yourself. 
