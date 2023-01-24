@@ -20,24 +20,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class HibernateConfig {
 	@Autowired
 	private ApplicationContext context;
-
 	@Autowired
-	private Environment env;
+	private DataSource ds;
 
-	@Bean
-	public DataSource getDataSource() {
-		MysqlDataSource ds = new MysqlDataSource();
-		ds.setUrl(env.getProperty("spring.datasource.url"));
-		ds.setUser(env.getProperty("spring.datasource.username"));
-		ds.setPassword(env.getProperty("spring.datasource.password"));
-		return ds;
-	}
-
-	
 	@Bean
 	public LocalSessionFactoryBean getSessionFactory() {
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-		factoryBean.setDataSource(getDataSource());
+		factoryBean.setDataSource(ds);
 		factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
 		factoryBean.setAnnotatedClasses(User.class);
 		return factoryBean;

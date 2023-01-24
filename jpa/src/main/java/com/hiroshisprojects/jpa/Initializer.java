@@ -7,7 +7,7 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { HibernateConfig.class, TestConfig.class };
+		return new Class<?>[] { DataSourceConfig.class, HibernateConfig.class };
 	}
 
 	@Override
