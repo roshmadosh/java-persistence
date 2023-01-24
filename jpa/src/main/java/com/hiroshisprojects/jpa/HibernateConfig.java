@@ -14,6 +14,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -22,10 +24,21 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@PropertySource(value = "classpath:datasource.properties")
 @EnableTransactionManagement
 public class HibernateConfig {
 	@Autowired
 	private ApplicationContext context;
+
+	@Autowired
+	private Environment env;
+
+	
+	@Bean(initMethod = "start", destroyMethod = "stop")
+	@DependsOn({"getH2DataSource"})
+	public Server getH2Server() throws Exception {
+		return Server.createWebServer("-web");
+	}
 
 	@Bean
 	public DataSource getH2DataSource() {
@@ -38,25 +51,13 @@ public class HibernateConfig {
 		return db;
 	}
 
-	@Bean(initMethod = "start", destroyMethod = "stop")
-	@DependsOn({"getH2DataSource"})
-	public Server getH2Server() throws Exception {
-		return Server.createWebServer("-web");
-	}
 
 	@Bean
 	public DataSource getDataSource() {
-		Properties props = new Properties();
-		try (InputStream inputStream = HibernateConfig.class.getClassLoader().getResourceAsStream("datasource.properties")) {
-			props.load(inputStream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		MysqlDataSource ds = new MysqlDataSource();
-		ds.setUrl(props.getProperty("spring.datasource.url"));
-		ds.setUser(props.getProperty("spring.datasource.username"));
-		ds.setPassword(props.getProperty("spring.datasource.password"));
+		ds.setUrl(env.getProperty("spring.datasource.url"));
+		ds.setUser(env.getProperty("spring.datasource.username"));
+		ds.setPassword(env.getProperty("spring.datasource.password"));
 		return ds;
 	}
 
@@ -64,7 +65,7 @@ public class HibernateConfig {
 	@Bean
 	public LocalSessionFactoryBean getSessionFactory() {
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-		factoryBean.setDataSource(getH2DataSource());
+		factoryBean.setDataSource(getDataSource());
 		factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
 		factoryBean.setAnnotatedClasses(User.class);
 		return factoryBean;
