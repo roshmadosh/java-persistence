@@ -40,4 +40,9 @@ as well the POJOs hibernate will deal with.
 
 The `HibernateTransationManager`, along with the `LocalSessionFactoryBean` are classes from the `org.springframework.orm.hibernate5` library. These classes make it possible to use a transaction manager and avoid having to open and commit transactions yourself.  
 
-To make Hibernate create tables for your entites, you need to set the property `hibernate.hbm2ddl.auto` to something that isn't `none`. In Spring Boot this will be done for us.
+To make Hibernate create tables for your entites, you need to set the property `hibernate.hbm2ddl.auto` to something that isn't `none`. In Spring Boot this will be done for us.  
+
+### H2 Embedded DB Setup
+To replicate `spring.h2.console.enabled=true` from Spring Boot (remember that everything we're doing is _without_ Boot), you have to include a bean in your application context from `org.h2.tools.Server` that returns `Server.createWebServer("-web")` and set `start` to be the init method for the bean.  
+
+Then `localhost:8082` is the default path for the H2 console. The name of the server is generated at application start, so you have to check the logs to find the name (e.g. something like `jdbc:h2:mem:e341c501-a499-47dc-9af3-46c35b343d5d`).
