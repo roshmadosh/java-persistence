@@ -7,6 +7,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -16,7 +17,7 @@ public class DataSourceConfig {
 	@Autowired
 	private Environment env;
 
-	// @Profile("test")
+	@Profile("test")
 	@Primary
 	@Bean
 	public DataSource getH2DataSource() {

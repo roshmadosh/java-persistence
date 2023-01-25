@@ -2,7 +2,6 @@ package com.hiroshisprojects.jpa;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.hiroshisprojects.jpa.users.User;
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -32,17 +31,16 @@ public class UserIntegrationTest {
 
 	@Test
 	@Transactional
-	@Rollback(true)
+	// @Rollback(false)
+	@Commit
 	public void whenUserSaved_thenCountIncrements() {
-		String testEmail = "TESTEMAIL@gmail.com";
+		String testEmail = "ANOTHER@gmail.com";
 		User testUser = new User();
 		testUser.setEmail(testEmail);
 
 		List<User> before = userDao.list();
-		LOGGER.info("BEFORE COUNT: " + before.size());
 		userDao.save(testUser);
 		List<User> after = userDao.list();
-		LOGGER.info("AFTER COUNT: " + after.size());
 	
 		assertEquals(before.size() + 1, after.size());	
 	}
