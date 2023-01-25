@@ -31,7 +31,6 @@ public class UserIntegrationTest {
 
 	@Test
 	@Transactional
-	// @Rollback(false)
 	@Commit
 	public void whenUserSaved_thenCountIncrements() {
 		String testEmail = "ANOTHER@gmail.com";
