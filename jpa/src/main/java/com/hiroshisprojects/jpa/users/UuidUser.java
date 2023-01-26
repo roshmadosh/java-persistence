@@ -1,45 +1,54 @@
 package com.hiroshisprojects.jpa.users;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Entity; 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
-
+/**
+ *	Saving a UUID Entity with Hibernate is buggy. Not gonna use this.
+ * */
 @Entity
-@Table(name = "users")
-public class User { 
+@Table(name = "uuid_users")
+public class UuidUser {
 
-	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY is same as auto-increment
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @Type(type = "org.hibernate.type.UUIDCharType")
 	private long id;
 
-	@Column(name = "email", unique = true) 
-	@Size(max=55, min=5, message = "{email.invalid}")
-	@NotEmpty(message = "Email cannot be empty.")
+	@Column(name = "email", unique = true)
+	@NotEmpty(message = "Email cannot be empty")
 	private String email;
-	
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + "]";
+		return "UuidUser [id=" + id + ", email=" + email + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,6 +56,7 @@ public class User {
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -55,11 +65,11 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		UuidUser other = (UuidUser) obj;
 		if (id != other.id)
 			return false;
 		return true;
 	}
 
-	
+
 }

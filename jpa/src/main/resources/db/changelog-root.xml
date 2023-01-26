@@ -10,4 +10,5 @@
             </column>
         </createTable>
     </changeSet>
+	<includeAll path="jpa/src/main/resources/db/changelogs/" />
 </databaseChangeLog>

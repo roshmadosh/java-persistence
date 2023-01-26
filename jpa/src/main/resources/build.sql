@@ -1,12 +1,11 @@
 DROP DATABASE IF EXISTS hibernatetest;
-DROP USER IF EXISTS `testadmin`@`%`;
-DROP USER IF EXISTS `testuser`@`%`;
+DROP USER IF EXISTS `testadmin`@`localhost`;
+DROP USER IF EXISTS `testuser`@`localhost`;
 CREATE DATABASE IF NOT EXISTS hibernatetest CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER IF NOT EXISTS `testadmin`@`%` IDENTIFIED WITH mysql_native_password BY 'password';
-GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, EXECUTE, CREATE VIEW, SHOW VIEW,
-CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER ON `hibernatetest`.* TO `testadmin`@`%`;
-CREATE USER IF NOT EXISTS `testuser`@`%` IDENTIFIED WITH mysql_native_password BY 'password';
-GRANT SELECT, INSERT, UPDATE, DELETE, SHOW VIEW ON `hibernatetest`.* TO `testuser`@`%`;
+CREATE USER IF NOT EXISTS `testadmin`@`localhost` IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT ALL PRIVILEGES ON `hibernatetest`.* TO `testadmin`@`localhost`;
+CREATE USER IF NOT EXISTS `testuser`@`localhost` IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT SELECT, INSERT, UPDATE, DELETE, SHOW VIEW ON `hibernatetest`.* TO `testuser`@`localhost`;
 FLUSH PRIVILEGES;
 
 

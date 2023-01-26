@@ -15,7 +15,6 @@ dependencies {
 	implementation("org.springframework:spring-webmvc:$springVersion")
 	implementation("org.springframework:spring-orm:$springVersion")
 
-	implementation("com.mysql:mysql-connector-j:8.0.31")
 	implementation("com.fasterxml.jackson.core:jackson-core:2.13.3")
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.13.3")
 
@@ -32,6 +31,7 @@ dependencies {
 	implementation("org.glassfish.web:el-impl:2.2")
 
 	liquibaseRuntime("com.mysql:mysql-connector-j:8.0.31")
+	implementation("com.mysql:mysql-connector-j:8.0.31")
 	liquibaseRuntime("info.picocli:picocli:4.6.3")
 	liquibaseRuntime("org.liquibase:liquibase-core:4.19.0")
 
